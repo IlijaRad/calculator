@@ -12,12 +12,7 @@ function App() {
     document.title = "Calculator";
   })
 
-  useEffect(() => {
-    console.log(calculation, calculationArray, 'calculation, calculationArray')
-  }, [calculation, calculationArray])
-
   const round = (n, d) => Math.round(n * Math.pow(10, d)) / Math.pow(10, d)
-
 
   const total = calculation => {
     if (String(calculation).length === 0) {
@@ -27,6 +22,7 @@ function App() {
     }
 
     setSum(calculation);
+    return calculation;
   }
 
 
@@ -56,8 +52,15 @@ function App() {
   }
 
   const equals = () => {
-    if (isNaN(calculationArray[calculation.length - 1])) return;
+
+    if (isNaN(calculationArray[calculationArray.length - 1])) {
+      console.log('error')
+      return
+    };
     total(calculationArray.join(''));
+
+    setCalculationArray([String(total(calculationArray.join('')))]);
+    setCalculation(String(total(calculationArray.join(''))));
 
   }
 
